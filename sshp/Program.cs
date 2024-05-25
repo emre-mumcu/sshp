@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Management;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
@@ -83,7 +84,7 @@ namespace sshp
                 {
                     Console.WriteLine(new CryptoLib(masterPass).KeySpace());
                 }
-                else if (args.Length == 3 && args[0] == "-dp")
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && args.Length == 3 && args[0] == "-dp")
                 {
                     var result = SECURITY.DPAPI.Protect(args[1], args[2]);
                     //Console.WriteLine(result);
@@ -91,7 +92,7 @@ namespace sshp
                     Clipboard.SetText(result);
                     Console.WriteLine("protected");
                 }
-                else if (args.Length == 3 && args[0] == "-du")
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && args.Length == 3 && args[0] == "-du")
                 {
                     var result = SECURITY.DPAPI.Unportect(args[1], args[2]);
                     //Console.WriteLine(result);
